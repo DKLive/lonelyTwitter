@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class LonelyTwitterActivity extends Activity {
 
@@ -50,7 +51,7 @@ public class LonelyTwitterActivity extends Activity {
 		NormalTweet normalTweet1 = new NormalTweet("");
 		NormalTweet normalTweet2 = new NormalTweet("");
 
-		ArrayList <Tweet> tweetList = new ArrayList<>();
+		ArrayList <Tweet> tweetList = new ArrayList<Tweet>();
 		tweetList.add(normalTweet);
 		tweetList.add(normalTweet1);
 		tweetList.add(normalTweet2);
@@ -61,12 +62,25 @@ public class LonelyTwitterActivity extends Activity {
 			Log.d("Tweet polymorphism", t.isImportant().toString());
 		}
 
-		try {
+		ArrayList<Tweetable> tweetableList = new ArrayList<Tweetable>();
+		tweetList.add(normalTweet);
+		tweetList.add(normalTweet1);
+		tweetList.add(normalTweet2);
+		tweetList.add(importantTweet1);
+		tweetList.add(importantTweet2);
+
+		String messageOnScreen = "";
+		for (Tweetable t:
+				tweetableList){
+			messageOnScreen += t.getMessage() +"\n";
+		}
+Toast.makeText(this,messageOnScreen, Toast.LENGTH_SHORT).show();
+		/*try {
 			normalTweet.setMessage("Hello World!");
 		}
 		catch(TweetTooLongException e){
 			Log.e("Error --->", "Tweet message too long!");
-		}
+		}*/
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
 

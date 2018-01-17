@@ -6,7 +6,7 @@ import java.util.Date;
  * Created by deepu on 1/16/2018.
  */
 
-public abstract class Tweet {
+public abstract class Tweet implements Tweetable {
     private String message;
     private Date date;
 

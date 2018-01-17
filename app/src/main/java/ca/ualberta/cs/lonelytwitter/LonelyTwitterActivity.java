@@ -12,6 +12,7 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,11 +29,44 @@ public class LonelyTwitterActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i("LifeCycle--->", "onCreate is called");
 		setContentView(R.layout.main);
 
 		bodyText = (EditText) findViewById(R.id.body);
 		Button saveButton = (Button) findViewById(R.id.save);
 		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
+
+		//Tweet tweet = new Tweet("");
+		NormalTweet normalTweet = new NormalTweet("");
+		try {
+			normalTweet.setMessage("Hello World!");
+		}
+		catch(TweetTooLongException e){
+			Log.e("Error --->", "Tweet message too long!");
+		}
+
+		ImportantTweet importantTweet1 = new ImportantTweet("Hello World, this is important");
+		ImportantTweet importantTweet2 = new ImportantTweet("This is another important tweet");
+		NormalTweet normalTweet1 = new NormalTweet("");
+		NormalTweet normalTweet2 = new NormalTweet("");
+
+		ArrayList <Tweet> tweetList = new ArrayList<>();
+		tweetList.add(normalTweet);
+		tweetList.add(normalTweet1);
+		tweetList.add(normalTweet2);
+		tweetList.add(importantTweet1);
+		tweetList.add(importantTweet2);
+
+		for(Tweet t:tweetList){
+			Log.d("Tweet polymorphism", t.isImportant().toString());
+		}
+
+		try {
+			normalTweet.setMessage("Hello World!");
+		}
+		catch(TweetTooLongException e){
+			Log.e("Error --->", "Tweet message too long!");
+		}
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
 
@@ -50,6 +84,7 @@ public class LonelyTwitterActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
+		Log.i("LifeCycle","onStart is called");
 		String[] tweets = loadFromFile();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item, tweets);

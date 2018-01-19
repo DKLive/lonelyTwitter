@@ -25,7 +25,7 @@ public class LonelyTwitterActivity extends Activity {
 	private static final String FILENAME = "file.sav";
 	private EditText bodyText;
 	private ListView oldTweetsList;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,62 +37,72 @@ public class LonelyTwitterActivity extends Activity {
 		Button saveButton = (Button) findViewById(R.id.save);
 		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
 
-		//Tweet tweet = new Tweet("");
-		NormalTweet normalTweet = new NormalTweet("");
-		try {
-			normalTweet.setMessage("Hello World!");
-		}
-		catch(TweetTooLongException e){
-			Log.e("Error --->", "Tweet message too long!");
-		}
-
-		ImportantTweet importantTweet1 = new ImportantTweet("Hello World, this is important");
-		ImportantTweet importantTweet2 = new ImportantTweet("This is another important tweet");
-		NormalTweet normalTweet1 = new NormalTweet("");
-		NormalTweet normalTweet2 = new NormalTweet("");
-
-		ArrayList <Tweet> tweetList = new ArrayList<Tweet>();
-		tweetList.add(normalTweet);
-		tweetList.add(normalTweet1);
-		tweetList.add(normalTweet2);
-		tweetList.add(importantTweet1);
-		tweetList.add(importantTweet2);
-
-		for(Tweet t:tweetList){
-			Log.d("Tweet polymorphism", t.isImportant().toString());
-		}
-
-		ArrayList<Tweetable> tweetableList = new ArrayList<Tweetable>();
-		tweetList.add(normalTweet);
-		tweetList.add(normalTweet1);
-		tweetList.add(normalTweet2);
-		tweetList.add(importantTweet1);
-		tweetList.add(importantTweet2);
-
-		String messageOnScreen = "";
-		for (Tweetable t:
-				tweetableList){
-			messageOnScreen += t.getMessage() +"\n";
-		}
-Toast.makeText(this,messageOnScreen, Toast.LENGTH_SHORT).show();
-		/*try {
-			normalTweet.setMessage("Hello World!");
-		}
-		catch(TweetTooLongException e){
-			Log.e("Error --->", "Tweet message too long!");
-		}*/
-
 		saveButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
+
+				//Tweet tweet = new Tweet("");
+				NormalTweet normalTweet = new NormalTweet("");
+				try {
+					normalTweet.setMessage("Hello World!");
+				}
+				catch(TweetTooLongException e){
+					Log.e("Error --->", "Tweet message too long!");
+				}
+
+				ImportantTweet importantTweet1 = new ImportantTweet("Hello World, this is important");
+				ImportantTweet importantTweet2 = new ImportantTweet("This is another important tweet");
+				NormalTweet normalTweet1 = new NormalTweet("This not so important");
+				NormalTweet normalTweet2 = new NormalTweet("this not important too");
+
+				ArrayList <Tweet> tweetList = new ArrayList<Tweet>();
+				tweetList.add(normalTweet);
+				tweetList.add(normalTweet1);
+				tweetList.add(normalTweet2);
+				tweetList.add(importantTweet1);
+				tweetList.add(importantTweet2);
+
+				for(Tweet t:
+						tweetList){
+					Log.d("Tweet polymorphism", t.isImportant().toString());
+				}
+
+				ArrayList<Tweetable> tweetableList = new ArrayList<Tweetable>();
+				tweetList.add(normalTweet);
+				tweetList.add(normalTweet1);
+				tweetList.add(normalTweet2);
+				tweetList.add(importantTweet1);
+				tweetList.add(importantTweet2);
+
+				String messageOnScreen = "";
+				for (Tweetable t:
+						tweetableList){
+					messageOnScreen += t.getMessage() +"\n";
+				}
+				//Toast.makeText(this,messageOnScreen, Toast.LENGTH_SHORT).show();
+
+
+				HappyMood m1 = new HappyMood("Happy");
+				AngryMood m2 = new AngryMood("Angry");
+				ArrayList<CurrentMood> moods = new ArrayList<CurrentMood>();
+				moods.add(m1);
+				moods.add(m2);
+
+				for(CurrentMood m:
+						moods){
+					Log.d("mood polymorphism", m.isHappy().toString());
+				}
+
+
 				saveInFile(text, new Date(System.currentTimeMillis()));
 				finish();
 
 			}
 		});
 	}
+
 
 	@Override
 	protected void onStart() {
@@ -103,6 +113,7 @@ Toast.makeText(this,messageOnScreen, Toast.LENGTH_SHORT).show();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item, tweets);
 		oldTweetsList.setAdapter(adapter);
+
 	}
 
 	private String[] loadFromFile() {
@@ -140,5 +151,11 @@ Toast.makeText(this,messageOnScreen, Toast.LENGTH_SHORT).show();
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	protected void onDestroy(){
+		super.onDestroy();
+		Log.i("Lifecycle","onDestroy is called");
 	}
 }

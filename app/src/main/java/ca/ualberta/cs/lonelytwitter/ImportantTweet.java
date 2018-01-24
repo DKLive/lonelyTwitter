@@ -1,10 +1,9 @@
 package ca.ualberta.cs.lonelytwitter;
 
-import java.util.Date;
-
 /**
- * Created by deepu on 1/16/2018.
+ * Created by dezfuli on 1/16/18.
  */
+import java.util.Date;
 
 public class ImportantTweet extends Tweet {
     ImportantTweet(String message){
@@ -12,7 +11,7 @@ public class ImportantTweet extends Tweet {
     }
 
     ImportantTweet(String message, Date date){
-        super(message,date);
+        super(message, date);
     }
 
     @Override

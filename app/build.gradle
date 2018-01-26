@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 18
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "ca.ualberta.cs.lonelytwitter"
-        minSdkVersion 18
-        targetSdkVersion 18
+
+            minSdkVersion 10
+            targetSdkVersion 18
+
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_5
             targetCompatibility JavaVersion.VERSION_1_5
@@ -22,5 +24,10 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.code.gson:gson:2.2.4'
 }
+/*dependencies {
+    compile 'com.google.code.gson:gson:2.2.+'
+    compile 'com.android.support:support-v4:13.0.+'
+    compile 'com.android.support:appcompat-v7:18.0.+'
+}*/
